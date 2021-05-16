@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-cl^#dfjp_))iz8xr+!nnc3x9fx6b!hp=7+7**=&ht321%4&wt2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*',]
 
 
 # Application definition
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
     # my apps
     'volunteers',
+    'patients',
 
 ]
 
@@ -56,8 +57,9 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
-
-    ]
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE':1,
 }
 
 MIDDLEWARE = [

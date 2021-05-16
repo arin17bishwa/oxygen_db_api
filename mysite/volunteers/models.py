@@ -9,6 +9,20 @@ from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 
 # Create your models here.
+VEHICLE_TYPES=[
+    (2,'2 WHEELER'),
+    (3,'3 WHEELER'),
+    (4,'4 WHEELER'),
+]
+
+PRODUCT_TYPES=[
+    ('oxygen','Oxygen'),
+]
+
+PRODUCTS=[
+    ('cylinder','Oxygen Cylinder'),
+    ('oximeter','Oximeter'),
+]
 
 
 class Volunteer(models.Model):
@@ -34,10 +48,12 @@ class Provider(models.Model):
     address = models.TextField(blank=False)
     pin_code = models.IntegerField()
     rating = models.FloatField(default=0)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+    active = models.BooleanField(default=True)
 
     def __str__(self):
-        return 'Provider: {}({}) at {}({})'.format(self.name, self.contact, self.pin_code, self.address)
+        return 'Provider: {}({})'.format(self.name, self.contact)
 
 
 class DeliveryExecutive(models.Model):
@@ -46,12 +62,42 @@ class DeliveryExecutive(models.Model):
     alt_contact = PhoneNumberField(blank=True, null=True)
     address = models.TextField(blank=False)
     pin_code = models.IntegerField()
-    vehicle_type=models.CharField(max_length=64)
+    vehicle_type=models.IntegerField(choices=VEHICLE_TYPES,default=2)
     rating = models.FloatField(default=0)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+    active=models.BooleanField(default=True)
 
     def __str__(self):
         return 'Delivery: {}({}) at {}'.format(self.name,self.contact,self.pin_code)
+
+
+class Product(models.Model):
+    product_type=models.CharField(max_length=16,choices=PRODUCT_TYPES)
+    product_details=models.CharField(max_length=16,choices=PRODUCTS)
+    uom=models.FloatField(default=0.5)  # IN LITRES
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+    active=models.BooleanField(default=True)
+
+    def __str__(self):
+        temp= '{}'.format(self.product_details)
+        if temp!='cylinder':
+            return temp
+        return temp+' | UOM={} L'.format(self.uom)
+
+
+class ProviderProductDetail(models.Model):
+    provider = models.ForeignKey(Provider,on_delete=models.CASCADE)
+    product = models.ForeignKey(Product,on_delete=models.SET_NULL,null=True)
+    pin_code=models.IntegerField()
+    total=models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+    active=models.BooleanField(default=True)
+
+    def __str__(self):
+        return '{} provides {} at {}'. format(self.provider,self.product, self.pin_code)
 
 
 @receiver(post_save,sender=User)

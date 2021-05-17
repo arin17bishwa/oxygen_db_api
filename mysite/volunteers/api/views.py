@@ -25,6 +25,7 @@ from .serializers import (
     ProviderSerializer,
     ProductSerializer,
     ProviderProductSerializer,
+    ProviderProductUpdateSerializer,
 )
 
 
@@ -136,9 +137,42 @@ def create_resource(request):
         data['success'] = True
         data['resource'] = serializer.data
     else:
+        try:
+            if serializer.errors.get('non_field_errors')[0].code=='unique':
+                data['msg']='(Provider,Product) pair already present. Update the existing one instead'
+                data['code']='unique'
+        except Exception as e:
+            print(e)
+            pass
         data['success'] = False
         data['errors'] = serializer.errors
     return Response(data)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated,])
+@vol_active
+def update_resource(request):
+    product_id=request.data.get('product')
+    provider_id=request.data.get('provider')
+    if product_id is None and provider_id is None:
+        return Response(data={'success':False,'msg':'Resource ID not provided'},status=status.HTTP_406_NOT_ACCEPTABLE)
+    try:
+        resource=ProviderProductDetail.objects.get(provider=provider_id,product=product_id)
+    except ProviderProductDetail.DoesNotExist:
+        return Response(data={'success':False,'msg':'Resource does not exist'},status=status.HTTP_404_NOT_FOUND)
+
+    data = {}
+    serializer = ProviderProductUpdateSerializer(resource,data=request.data,partial=True)
+    if serializer.is_valid():
+        _ = serializer.save()
+        data['success'] = True
+        data['resource'] = serializer.data
+    else:
+        data['success'] = False
+        data['errors'] = serializer.errors
+    return Response(data)
+
 
 # @api_view(['POST'])
 # @permission_classes([IsAuthenticated,])
@@ -175,9 +209,9 @@ class ResourcesListView(ListAPIView):
     permission_classes=()
     pagination_class = PageNumberPagination
     filter_backends = (OrderingFilter,SearchFilter)
-    search_fields=('=pin_code','=provider__contact','provider__address')
+    search_fields=('=pin_code','=provider__contact','provider__address','product__product_details')
     ordering_fields=('total',)
-    ordering=('total',)
+    ordering=('-total',)
 
 
 def activate(request, uidb64, token):

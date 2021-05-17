@@ -13,6 +13,19 @@
     }
 },
 {
+    "model": "admin.logentry",
+    "pk": 42,
+    "fields": {
+        "action_time": "2021-05-17T14:17:28.910Z",
+        "user": 26,
+        "content_type": 13,
+        "object_id": "2",
+        "object_repr": "Provider: provider 1(+918749878946) provides cylinder | UOM=4.0 L at 700135",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
     "model": "auth.user",
     "pk": 26,
     "fields": {
@@ -26,6 +39,24 @@
         "is_staff": true,
         "is_active": true,
         "date_joined": "2021-05-17T05:30:20.044Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 27,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$z00tWsYW3vxpwSHwUgq49a$c4dAN+3/2hn0VWNMyJJMzs3m4gOYnro3I4dtrBJ8fgQ=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "2",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2021-05-17T06:00:00.998Z",
         "groups": [],
         "user_permissions": []
     }
@@ -52,6 +83,22 @@
         "rating": 0.0,
         "is_active": true,
         "timestamp": "2021-05-17T05:31:51.056Z"
+    }
+},
+{
+    "model": "volunteers.volunteer",
+    "pk": 12,
+    "fields": {
+        "user": 27,
+        "name": "2 ghosh",
+        "email": "2@gmail.con",
+        "contact": "+914889385345",
+        "alt_contact": "+913412378905",
+        "address": "address 2=5",
+        "pin_code": 700001,
+        "rating": 0.0,
+        "is_active": true,
+        "timestamp": "2021-05-17T06:01:16.314Z"
     }
 },
 {
@@ -82,6 +129,21 @@
         "created_at": "2021-05-16T06:08:38.315Z",
         "modified": "2021-05-16T18:11:10.980Z",
         "active": true
+    }
+},
+{
+    "model": "volunteers.provider",
+    "pk": 3,
+    "fields": {
+        "name": "provider 1",
+        "contact": "+918749458942",
+        "alt_contact": null,
+        "address": "provider address 1",
+        "pin_code": 500345,
+        "rating": 0.0,
+        "created_at": "2021-05-17T06:49:51.529Z",
+        "modified": "2021-05-17T06:49:51.529Z",
+        "active": false
     }
 },
 {
@@ -205,6 +267,18 @@
     }
 },
 {
+    "model": "volunteers.product",
+    "pk": 12,
+    "fields": {
+        "product_type": "oxygen",
+        "product_details": "oximeter",
+        "uom": 0.5,
+        "created_at": "2021-05-17T07:18:39.374Z",
+        "modified": "2021-05-17T07:18:39.374Z",
+        "active": true
+    }
+},
+{
     "model": "volunteers.providerproductdetail",
     "pk": 1,
     "fields": {
@@ -219,14 +293,40 @@
 },
 {
     "model": "volunteers.providerproductdetail",
-    "pk": 2,
+    "pk": 3,
     "fields": {
         "provider": 1,
         "product": 3,
         "pin_code": 700135,
         "total": 20,
-        "created_at": "2021-05-16T17:45:33.181Z",
-        "modified": "2021-05-16T17:45:33.182Z",
+        "created_at": "2021-05-17T06:42:24.821Z",
+        "modified": "2021-05-17T06:42:24.821Z",
+        "active": true
+    }
+},
+{
+    "model": "volunteers.providerproductdetail",
+    "pk": 4,
+    "fields": {
+        "provider": 2,
+        "product": 3,
+        "pin_code": 700135,
+        "total": 20,
+        "created_at": "2021-05-17T14:32:25.916Z",
+        "modified": "2021-05-17T14:32:25.916Z",
+        "active": true
+    }
+},
+{
+    "model": "volunteers.providerproductdetail",
+    "pk": 5,
+    "fields": {
+        "provider": 2,
+        "product": 1,
+        "pin_code": 700135,
+        "total": 20,
+        "created_at": "2021-05-17T14:32:50.407Z",
+        "modified": "2021-05-17T14:45:38.433Z",
         "active": true
     }
 }

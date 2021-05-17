@@ -94,7 +94,7 @@ def create_provider(request):
 @permission_classes([IsAuthenticated,])
 @vol_active
 def update_profile(request):
-    """This view excepts to receive all """
+    """This view expects to receive all """
     user=request.user
     vol=Volunteer.objects.get(user=user)
     serializer=ProfileSerializer(vol,data=request.data,partial=True)

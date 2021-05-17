@@ -13,6 +13,7 @@ from .views import (
     ProviderListView,
     ResourcesListView,
     create_resource,
+    update_resource,
 
 )
 
@@ -29,5 +30,6 @@ urlpatterns = [
     path('providers/', ProviderListView.as_view(), name='providers'),
     path('resources/',ResourcesListView.as_view(),name='resources'),
     path('add-resource/', create_resource, name='add-resource'),
+    path('update-resource/', update_resource, name='update-resource'),
     path('activate/<slug:uidb64>/<slug:token>/', activate, name='activate'),
 ]

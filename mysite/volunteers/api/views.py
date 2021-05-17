@@ -191,7 +191,7 @@ def update_resource(request):
 
 
 class ProviderListView(ListAPIView):
-    queryset = Provider.objects.all()
+    # queryset = Provider.objects.all()
     serializer_class = ProviderSerializer
     authentication_classes = ()
     permission_classes=()
@@ -201,9 +201,28 @@ class ProviderListView(ListAPIView):
     ordering_fields = ('modified',)
     ordering = ('-modified',)
 
+    def get_queryset(self):
+        """Support for searching with pin_code, provider contact, provider address """
+        qs=Provider.objects.all()
+        params=self.request.query_params
+
+        pin_code=params.get('pin_code')
+        if pin_code and qs:
+            qs=qs.filter(pin_code=pin_code)
+
+        address=params.get('address')
+        if address and qs:
+            qs=qs.filter(address__icontains=address)
+
+        contact = params.get('contact')
+        if contact and qs:
+            qs = qs.filter(contact=contact)
+
+        return qs
+
 
 class ResourcesListView(ListAPIView):
-    queryset = ProviderProductDetail.objects.all()
+    # queryset = ProviderProductDetail.objects.all()
     serializer_class = ProviderProductSerializer
     authentication_classes = ()
     permission_classes=()
@@ -212,6 +231,29 @@ class ResourcesListView(ListAPIView):
     search_fields=('=pin_code','=provider__contact','provider__address','product__product_details')
     ordering_fields=('total',)
     ordering=('-total',)
+
+    def get_queryset(self):
+        """Support for searching with pin_code, provider contact, provider address, product details"""
+        qs=ProviderProductDetail.objects.all()
+        params=self.request.query_params
+
+        pin_code=params.get('pin_code')
+        if pin_code and qs:
+            qs=qs.filter(pin_code=pin_code)
+
+        provider_contact=params.get('provider_contact')
+        if provider_contact and qs:
+            qs=qs.filter(provider__contact=provider_contact)
+
+        provider_address = params.get('provider_address')
+        if provider_address and qs:
+            qs = qs.filter(provider__address__icontains=provider_address)
+
+        product_details = params.get('product_details')
+        if product_details and qs:
+            qs = qs.filter(product__product_details=product_details)
+
+        return qs
 
 
 def activate(request, uidb64, token):

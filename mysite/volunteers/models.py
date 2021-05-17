@@ -22,6 +22,7 @@ PRODUCT_TYPES=[
 PRODUCTS=[
     ('cylinder','Oxygen Cylinder'),
     ('oximeter','Oximeter'),
+    ('concentrator', 'Concentrator'),
 ]
 
 

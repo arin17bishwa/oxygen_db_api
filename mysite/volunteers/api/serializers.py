@@ -85,10 +85,3 @@ class ProviderProductSerializer(serializers.ModelSerializer):
         except Product.DoesNotExist:
             data = {'success': False, 'msg': 'Product does not exist'}
             return Response(data=data, status=status.HTTP_404_NOT_FOUND)
-
-
-# class CreateProviderProductSerializer(serializers.ModelSerializer):
-#
-#     class Meta:
-#         model=ProviderProductDetail
-#         fields=['provider','product',]

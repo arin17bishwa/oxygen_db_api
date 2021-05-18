@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from .views import home_view
+from .views import home_view,loader_io
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('volunteers/',include('volunteers.api.urls','volunteers_api')),
     path('', home_view,name='home'),
+    path('loaderio-24281282647eef74980d9ea6bacac7c6/',loader_io,name='loader-io'),
 ]

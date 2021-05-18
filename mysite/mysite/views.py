@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,HttpResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
@@ -14,3 +14,8 @@ def home_view(request):
         'msg': 'Be good people'
     }
     return Response(data=data,status=status.HTTP_200_OK)
+
+
+def loader_io(request):
+    s='loaderio-24281282647eef74980d9ea6bacac7c6'
+    return HttpResponse(content=s)

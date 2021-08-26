@@ -149,5 +149,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'oxygen.electrikx@gmail.com'  # os.environ.get('TRY_GMAIL_ID')#'youremail@gmail.com'
-EMAIL_HOST_PASSWORD = 'oxygen_db@2021'  # os.environ.get('TRY_GMAIL_PASSWORD')
+EMAIL_HOST_PASSWORD = 'bufjbajhbe87rhf2ifb'  # os.environ.get('TRY_GMAIL_PASSWORD')
 EMAIL_PORT = 587
